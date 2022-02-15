@@ -3,6 +3,8 @@ import ProductsModel from './model.js'
 
 const productsRouter = Router()
 
+// RANDOM COMMENT TO MERGE BRANCHES
+
 productsRouter.route('/')
 .get(async (req, res) => {
     try {
