@@ -49,8 +49,14 @@ productsRouter.route('/:id')
 .delete(async (req, res) => {
     try {
         const product = await ProductsModel.findByIdAndDelete(req.params.id)
-        if (!product) return res.sendStatus(404)
-        res.sendStatus(204)
+        console.log('you reached me 1');
+        if (!product) {
+            res.sendStatus(404) 
+            console.log('you reached me 2');
+        } else {
+            res.sendStatus(204)
+            console.log('you reached me 3');
+        }
     } catch (error) {
         console.log(error)
         res.sendStatus(500)
