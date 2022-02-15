@@ -16,11 +16,12 @@ describe('Testing Product Routes - CRUD Functionality', () => {
         })
     })
 
-    afterAll(done => {
-        // await mongoose.connection.dropDatabase()
-        // mongoose.connection.close()
+    afterAll((done) => {
+    mongoose.connection.close().then(() => {
         done()
+        })
     })
+    
 
     let productId
     const newProduct = { name: 'Test Product', price: 100 }

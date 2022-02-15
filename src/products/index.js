@@ -31,6 +31,7 @@ productsRouter.route('/:id')
 .get(async (req, res) => {
     try {
         const product = await ProductsModel.findById(req.params.id)
+        console.log(product)
         if (!product) return res.status(404).send()
         res.send(product)
     } catch (error) {
