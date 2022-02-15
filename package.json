@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watchAll",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watchAll --coverage",
     "dev": "nodemon -r dotenv/config ./src/index.js",
     "start": "node ./src/index.js"
   },
