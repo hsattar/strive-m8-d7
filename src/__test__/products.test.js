@@ -22,11 +22,32 @@ describe('First Test', () => {
         done()
     })
 
+    let productId
     const newProduct = { name: 'Test Product', price: 100 }
+    const invalidProduct = { name: 'Invalid' }
+
+    it('Should get all the products', async () => {
+        const response = await request.get('/products')
+        expect(response.status).toBe(200)
+    })
+    
+    it('Should return status of 400 if you add an invalid product', async () => {
+        const response = await request.post('/products').send(invalidProduct)
+        expect(response.status).toBe(400)
+    })
 
     it('should add a new product', async () => {
         const response = await request.post('/products').send(newProduct)
         expect(response.status).toBe(201)
         expect(response.body._id).toBeDefined()
+        productId = response.body._id
+    })
+
+    it('Should be able to get a specific product by id', async () => {
+        const response = await request.get(`/products/${productId}`)
+        expect(response.status).toBe(200)
+        expect(response.body._id).toBe(productId)
+        expect(response.body.name).toBe(newProduct.name)
+        expect(response.body.price).toBe(newProduct.price)
     })
 })
