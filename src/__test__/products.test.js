@@ -25,6 +25,7 @@ describe('First Test', () => {
     let productId
     const newProduct = { name: 'Test Product', price: 100 }
     const invalidProduct = { name: 'Invalid' }
+    const modifiedProduct = { price: 123 }
 
     it('Should get all the products', async () => {
         const response = await request.get('/products')
@@ -43,11 +44,22 @@ describe('First Test', () => {
         productId = response.body._id
     })
 
+   it('should return status 404 if you search an invalid product', async () => {
+       const response = request.get('/products/123')
+       expect(response.status).toBe(404)
+   })
+
     it('Should be able to get a specific product by id', async () => {
         const response = await request.get(`/products/${productId}`)
         expect(response.status).toBe(200)
         expect(response.body._id).toBe(productId)
         expect(response.body.name).toBe(newProduct.name)
         expect(response.body.price).toBe(newProduct.price)
+    })
+
+    it ('Should be able to edit a product', async () => {
+        const response = await request.put(`/products/${productId}`).send(modifiedProduct)
+        expect(response.status).toBe(200)
+        expect(response.body.price).toBe(modifiedProduct.price)
     })
 })

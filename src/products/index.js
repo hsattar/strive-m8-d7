@@ -10,6 +10,7 @@ productsRouter.route('/')
         res.send(products)
     } catch (error) {
         console.log(error)
+        res.sendStatus(500)
     }
 })
 .post(async (req, res) => {
@@ -20,16 +21,28 @@ productsRouter.route('/')
         res.status(201).send(product)
     } catch (error) {
         console.log(error)
+        res.sendStatus(500)
     }
 })
 
 productsRouter.route('/:id')
 .get(async (req, res) => {
     try {
-        const products = await ProductsModel.findById(req.params.id)
-        res.send(products)
+        const product = await ProductsModel.findById(req.params.id)
+        if (!product) return res.status(404).send()
+        res.send(product)
     } catch (error) {
         console.log(error)
+        res.sendStatus(500)
+    }
+})
+.put(async (req, res)=> {
+    try {
+        const product = await ProductsModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        res.send(product)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
     }
 })
 
