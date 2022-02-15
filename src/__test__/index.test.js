@@ -1,6 +1,5 @@
 import app from '../app.js'
 import supertest from 'supertest'
-import mogoose from 'mongoose'
 import dotenv from 'dotenv'
 
 dotenv.config()

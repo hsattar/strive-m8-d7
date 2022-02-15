@@ -1,6 +1,6 @@
 import express from "express"
 import cors from 'cors'
-import ProductsModel from './products/model.js'
+import productsRouter from './products/index.js'
 
 const app = express()
 
@@ -9,6 +9,6 @@ app.use(cors())
 
 app.get('/', (req, res) => res.send('Hello World'))
 
-app.use('/products', ProductsModel)
+app.use('/products', productsRouter)
 
 export default app
