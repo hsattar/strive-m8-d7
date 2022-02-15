@@ -57,9 +57,27 @@ describe('First Test', () => {
         expect(response.body.price).toBe(newProduct.price)
     })
 
+    it('should return status 404 if you try to edit an invalid product', async () => {
+        const response = request.put('/products/123')
+        expect(response.status).toBe(404)
+    })
+
     it ('Should be able to edit a product', async () => {
         const response = await request.put(`/products/${productId}`).send(modifiedProduct)
+        const modifiedPriceType = typeof(modifiedProduct.price)
         expect(response.status).toBe(200)
+        expect(modifiedPriceType).toBe('number')
         expect(response.body.price).toBe(modifiedProduct.price)
     })
+
+    it('should return status 404 if you try deleting an invalid product', async () => {
+        const response = request.delete('/products/123')
+        expect(response.status).toBe(404)
+    })
+
+    it('should return a status of 204 when deleting a product', async () => {
+        const response = await request.delete(`/products/${productId}`)
+        expect(response.status).toBe(204)
+    })
+
 })

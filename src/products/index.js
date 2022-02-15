@@ -39,7 +39,18 @@ productsRouter.route('/:id')
 .put(async (req, res)=> {
     try {
         const product = await ProductsModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        if (!product) return res.sendStatus(404)
         res.send(product)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+})
+.delete(async (req, res) => {
+    try {
+        const product = await ProductsModel.findByIdAndDelete(req.params.id)
+        if (!product) return res.sendStatus(404)
+        res.sendStatus(204)
     } catch (error) {
         console.log(error)
         res.sendStatus(500)
